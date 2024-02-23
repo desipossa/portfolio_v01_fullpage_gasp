@@ -27,7 +27,7 @@ function contentFullpage() {
         },
         afterLoad: (origin, destination, direction) => {
             console.log(destination.index, direction);
-            typingMe(``);
+            // typingMe(``);
         },
 
         onLeave: (origin, destination, direction, trigger) => {
