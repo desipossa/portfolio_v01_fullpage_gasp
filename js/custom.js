@@ -41,13 +41,15 @@ function contentFullpage() {
         // },
 
         onSlideLeave: (section, origin, destination, direction, trigger) => {
-            const txt = document.querySelectorAll('.portfolio .desc h3');
-            const type = (t) => typingMe(t);
-            if (destination.index === 0) {
-                type(``);
-            } else {
-                type(`${txt[destination.index].innerHTML}`);
-            }
+            // const txt = document.querySelectorAll('.portfolio .desc h3');
+            // if (destination.index === 0) {
+            //     typingMe(``);
+            //     return;
+            // }
+            // console.log(destination.index);
+            // destination.index !== 0 && setTimeout(() => {
+            //     const t = typingMe(`${txt[destination.index - 1].innerHTML}`);
+            // }, 1000)
             destination.index && portfolioTimeline(destination.index - 1);
         }
     });
