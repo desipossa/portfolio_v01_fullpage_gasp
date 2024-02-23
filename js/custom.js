@@ -3,19 +3,17 @@
     contentFullpage();
     coverTimeline();
     gnbEvent();
-    //mainVisualTimeline();
+    circleTxt(`.profile .ctxt`);
 })();
-
 
 //프레임전체 fullpage
 function contentFullpage() {
-
     const slideWrap = document.querySelector('.portfolio');
 
     const f = new fullpage('#content', {
         anchors: ['intro', 'portfolio', 'profile'],
-
         scrollOverflow: false,
+
         //fullpage slide의 가로스크롤 구현 option
         controlArrows: false, //슬라이드 화살표 숨김
         loopHorizontal: false, //슬라이드 반복 멈춤
@@ -23,33 +21,25 @@ function contentFullpage() {
 
         //메인 애니메이션 재실행.
         afterRender: () => {
-            setTimeout(mainVisualTimeline);
+            mainVisualTimeline();
         },
         afterLoad: (origin, destination, direction) => {
             console.log(destination.index, direction);
-            // typingMe(``);
+            mouseCursorReset();
+            destination.index === 0 && mouseCursor();
+            destination.index === 2 && mouseCursor();
+            destination.index === 2 && mouseCursor();
         },
 
         onLeave: (origin, destination, direction, trigger) => {
             destination.index === 0 && mainVisualTimeline();
-            destination.index === 1 && storyTimeline();
-        },
-        // https://jin2rang.tistory.com/entry/setTimeout-clearTimeout
 
-        // afterSlideLoad: (section, origin, destination, direction, trigger) => {
-        //     destination.index && setTimeout(() => portfolioTimeline(destination.index))
-        // },
+            destination.index === 1 && storyTimeline();
+            destination.index === 2 && profileTimeline();
+
+        },
 
         onSlideLeave: (section, origin, destination, direction, trigger) => {
-            // const txt = document.querySelectorAll('.portfolio .desc h3');
-            // if (destination.index === 0) {
-            //     typingMe(``);
-            //     return;
-            // }
-            // console.log(destination.index);
-            // destination.index !== 0 && setTimeout(() => {
-            //     const t = typingMe(`${txt[destination.index - 1].innerHTML}`);
-            // }, 1000)
             destination.index && portfolioTimeline(destination.index - 1);
         }
     });
@@ -101,7 +91,7 @@ function gnbEvent() {
 function mainVisualTimeline() {
     const t = document.querySelector('.mainVisal .tit h2');
     const p = document.querySelector('.mainVisal .tit p');
-    const txt = document.querySelector('.mainVisal .con .t');
+    const a = document.querySelector('.mainVisal .t');
 
     const tl = gsap.timeline();
     tl
@@ -136,10 +126,6 @@ function mainVisualTimeline() {
             },
             duration: 10,
             //yoyo: true,
-            repeat: -1,
-        }).from(txt, {
-            autoAlpha: 0,
-            duration: 0.3,
             repeat: -1,
         })
 }
@@ -217,16 +203,63 @@ function storyTimeline() {
 }
 
 
-function typingMe(txt) {
-    const typed = new Typed('#type', {
-        strings: [txt],
-        typeSpeed: 100,
-        // smartBackspace: false,
-        cursorChar: null,
-        showCursor: false,
-    });
+function profileTimeline() {
+    const t = document.querySelector('.profile .tit h3');
+    const p = document.querySelector('.profile .tit p');
+    const c = document.querySelector('.profile .ctxt');
+    const tl = gsap.timeline();
+
+    tl.from(t, {
+        x: 1000,
+        autoAlpha: 0,
+        delay: 1
+    }).from(p, {
+        x: 1000,
+        autoAlpha: 0,
+        delay: 1
+    })
 }
 
+function mouseCursor() {
+    const mc = document.querySelectorAll('.mainVisal , .profile');
+    mc.forEach(it => {
+        it.addEventListener('mousemove', (e) => {
+            let mouseX = e.pageX + 10; // document의 x좌표값
+            let mouseY = e.pageY + 10; // document의 y좌표값
+
+            const cursor = document.querySelector('.cursor');
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        })
+    })
+}
+
+function mouseCursorReset() {
+    const cursor = document.querySelector('.cursor');
+    cursor.style.left = 80 + 'px';
+    cursor.style.top = 'auto';
+    cursor.style.bottom = 40 + 'px';
+}
+
+
+function circleTxt(txt) {
+    const t = document.querySelector(txt).innerText;
+    const at = [...t].map(it => `<span>${it}</span>`).join('');
+    document.querySelector(txt).innerHTML = at;
+    const b = document.querySelector(txt);
+    const ctxt = b.querySelectorAll("span");
+    console.log(ctxt);
+
+    ctxt.forEach((it, idx, arry) => {
+        it.style.cssText = `
+        position: absolute;
+        top:0;
+        left: 50%;
+        height: 100%;
+        transform: translate(-50%,0) rotate(${360 / arry.length * idx}deg)
+        `
+    })
+}
 
 
 

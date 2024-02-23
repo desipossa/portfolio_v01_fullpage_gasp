@@ -6,6 +6,30 @@
     --white-color: #FFFFFF;
 }
 
+.fp-watermark {
+    display: none;
+}
+
+.cursor {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    cursor: none;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    /* background: var(--lightgray-color); */
+    backdrop-filter: invert(80%);
+    transition: 0.1s;
+}
+
+.cursor img {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    transform: rotate(-135deg);
+    width: 5rem;
+}
+
 html {
     font-size: 62.5%;
 }
@@ -19,6 +43,10 @@ body {
     max-width: 120rem;
     margin: 0 auto;
     width: 100%;
+}
+
+.fp-overflow::-webkit-scrollbar {
+    display: none !important;
 }
 
 
@@ -166,13 +194,13 @@ body {
     position: relative;
 }
 
-.mainVisal .con .t {
+.mainVisal .t {
     position: absolute;
     bottom: -20rem;
     right: -10rem;
     font-size: 4rem;
     font-weight: 900;
-    z-index: 999;
+    z-index: 9999;
 }
 
 .mainVisal .con .p {
@@ -203,6 +231,29 @@ body {
 
 .portfolio .title {
     position: relative;
+}
+
+.profile .ctxt {
+    position: absolute;
+    bottom: 10rem;
+    right: 0;
+    width: 80%;
+    height: 80%;
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    animation: ctxt 25s linear infinite;
+}
+
+@keyframes ctxt {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .portfolio .title .corg1 {
@@ -381,7 +432,7 @@ body {
     position: relative;
     flex: 0 0 30rem;
     height: 82.5rem;
-
+    cursor: n-resize;
 }
 
 .portfolio .mokup>* {
@@ -411,6 +462,21 @@ body {
 
 .portfolio .mokup .line:hover+.pof img {
     transform: translate(0, calc(-100% + 82rem));
+}
+
+
+.profile {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+.profile .tit h3 {
+    font-size: 10rem;
+    font-weight: 900;
+    margin: 0 0 3.2rem 0;
+    text-transform: uppercase;
 }
 
 
